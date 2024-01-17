@@ -1,3 +1,3 @@
 #Try Not To Laugh
-✨-1.This is a list of worldwide acclaimed memes, which are funny and humourous.
-🎇-2.Welcome to our app.
+1.This is a list of funny and humourous memes, which we are sure you will enjoy.
+2.So, with this, welcome to our app .
