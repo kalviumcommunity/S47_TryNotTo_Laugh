@@ -1,18 +1,35 @@
 console.log('server is starting')
 
-var express = require('express')
+var express = require('express');
+const mongoose = require('mongoose')
 var app = express();
+const { startDatabase, stopDatabase, isConnected } = require('./db');
+const server = app.listen(3000)
 
-var server = app.listen(3000,listening)
+require('dotenv').config()
 
 function listening(){
     console.log('listening.....');
 }
+
+process.on('SIGINT', async () => {
+    await stopDatabase();
+    process.exit(0);
+  });
+  
+  process.on('SIGTERM', async () => {
+    await stopDatabase();
+    process.exit(0);
+  });
+
+
 if(require.main === module){
     app.get('/',(req,res)=>{
-        res.send('Ansh')
+        res.json({message: 'o_O',
+    database: isConnected() ? 'connected' : 'disconnected'})
     })
 }
+
 
 
 // app.use(express.static('website'));
