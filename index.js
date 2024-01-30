@@ -26,10 +26,5 @@ process.on('SIGINT', async () => {
 if(require.main === module){
     app.get('/',(req,res)=>{
         res.json({message: 'o_O',
-    database: isConnected() ? 'connected' : 'disconnected'})
-    })
+    database: isConnected() ? 'connected' : 'disconnected'})})
 }
-
-
-
-// app.use(express.static('website'));
