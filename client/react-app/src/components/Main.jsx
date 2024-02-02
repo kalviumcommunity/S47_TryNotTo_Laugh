@@ -1,49 +1,42 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useEffect } from 'react'
-import data from '../assets/data.json'
-
 
 const Main = () => {
 
+    const [data,setData] = useState([])
 
-//   useEffect(()=>{
-//     async function getMovies(){
-//         try{
-//             const res = await axios.get('http://localhost:3000/')
-//             console.log(res);
-//         } catch(error){
-//             console.log(error);
-//         }
-//     }
+    useEffect(()=>{
+        async function getai(){
+            try{
+                const res = await axios.get('http://localhost:4200/')
+                console.log(res)
+                setData(res.data)
+            }catch(err){
+                console.log(err)
+            }
+        }
+        getai()
+    },[])
 
-//     getMovies()
-// },[])  
-
+    console.log(data)
 
   return (
     <div>
-        <h1>Try Not To Laugh</h1>
         {
-          data.map((item,index)=>{
-            return(
-              <div key={index}>
-                <div>
-                  {
-                    item.Memes
-                  }
-                </div>
-                <div className=''>
-                  <div>
-                    {item.Like}
-                  </div>
-                  <div>
-                    {item.Dislike}
-                  </div>
-                </div>
-              </div>
-            )
-          })
+            data.map((item)=>{
+                return(
+                    <div>
+                        {item.Serial} <br/>
+                        {item.Memes}
+                        <div>
+                            Like:{item.Like} <br/>
+                            Dislike:{item.Dislike}
+                        </div>
+                        <br/>
+                    </div>
+                    
+                )
+            })
         }
     </div>
   )
