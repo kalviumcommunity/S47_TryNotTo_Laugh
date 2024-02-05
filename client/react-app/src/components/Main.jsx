@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 
 const Main = () => {
 
@@ -22,6 +23,11 @@ const Main = () => {
 
   return (
     <div>
+        <div>
+            <Link to='/form'>
+                <button>Add your own meme</button>
+            </Link>
+        </div>
         {
             data.map((item)=>{
                 return(

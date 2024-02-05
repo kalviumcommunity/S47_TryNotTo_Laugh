@@ -1,10 +1,18 @@
 const mongoose = require('mongoose')
 
 const MemesSchema = new mongoose.Schema({
-  Serial : Number,
-  Memes : String,
-  Like : Number,
-  Dislike : Number
+  Serial :{
+    type : Number
+  },
+  Memes : {
+    type: String
+  },
+  Like : {
+    type: Number
+  },
+  Dislike : {
+    type:Number
+  }
 })
 
 const MemesModel = mongoose.model("Memes",MemesSchema)
