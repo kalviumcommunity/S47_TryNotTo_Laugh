@@ -2,12 +2,14 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const MemesModel = require('./index')
+require('dotenv').config()
 
 const app = express()
 app.use(cors())
 app.use(express.json())
 
-const uri = 'mongodb+srv://ansh:ansh@cluster0.dhmosqv.mongodb.net/ASAP?retryWrites=true&w=majority'
+const uri = process.env.MONGODB_URI
+console.log(uri);
 mongoose.connect(uri)
   .then(() => {
     console.log('Connected to MongoDB Atlas');
