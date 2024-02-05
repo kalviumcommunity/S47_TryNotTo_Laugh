@@ -1,35 +1,49 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useEffect } from 'react'
+import {Link} from 'react-router-dom'
 
 const Main = () => {
 
-  const data = useState('')
+    const [data,setData] = useState([])
 
-  useEffect(()=>{
-    async function getMovies(){
-        try{
-            const res = await axios.get('http://localhost:3000/')
-            console.log(res);
-        } catch(error){
-            console.log(error);
+    useEffect(()=>{
+        async function getai(){
+            try{
+                const res = await axios.get('http://localhost:4200/')
+                console.log(res)
+                setData(res.data)
+            }catch(err){
+                console.log(err)
+            }
         }
-    }
+        getai()
+    },[])
 
-    getMovies()
-},[])  
-
+    console.log(data)
 
   return (
     <div>
-        <h1>Try Not To Laugh</h1>
-        <div className="bg-blue-800">
-            <div className='bg-red-200'>Serial No.</div>
-            <div>The Meme</div>
-            {
-              data
-            }
+        <div>
+            <Link to='/form'>
+                <button>Add your own meme</button>
+            </Link>
         </div>
+        {
+            data.map((item)=>{
+                return(
+                    <div>
+                        {item.Serial} <br/>
+                        {item.Memes}
+                        <div>
+                            Like:{item.Like} <br/>
+                            Dislike:{item.Dislike}
+                        </div>
+                        <br/>
+                    </div>
+                    
+                )
+            })
+        }
     </div>
   )
 }
