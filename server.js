@@ -3,13 +3,20 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const MemesModel = require('./index')
 require('dotenv').config()
-
+const joi = require('joi')
 const app = express()
 app.use(cors())
 app.use(express.json())
   
+
+const updateSchema = joi.object({
+  Serial: joi.number().required(),
+  Memes: joi.string().required(),
+  Like: joi.number().required(),
+  Dislike: joi.number().required()
+})
+
 const uri = process.env.MONGODB_URI
-console.log(uri);
 mongoose.connect(uri)
   .then(() => {
     console.log('Connected to MongoDB Atlas');
@@ -26,18 +33,22 @@ mongoose.connect(uri)
   })
 
     app.post('/createMeme', (req,res)=>{
-      let { Serial, Memes, Like, Dislike } = req.body;  
-      Serial = parseInt(Serial)
-      Like = parseInt(Like)
-      Dislike = parseInt(Dislike)  
-      MemesModel.create({Serial, Memes, Like, Dislike })
-        .then(meme => res.json(meme))
-        .catch(err => res.json(err))
+      const {error,value} = updateSchema.validate()
+      if(error){
+        console.log(error.details);
+      }else{
+        let { Serial, Memes, Like, Dislike } = req.body;  
+        Serial = parseInt(Serial)
+        Like = parseInt(Like)
+        Dislike = parseInt(Dislike)  
+        MemesModel.create({Serial, Memes, Like, Dislike })
+          .then(meme => res.json(meme))
+          .catch(err => res.json(err))
+      }
     })
 
     app.get('/getUser/:id',(req,res)=>{
       const id = req.params.id;
-      console.log(id);
       MemesModel.findById({_id:id})
       .then(users => res.json(users))
       .catch(err=> res.json(err))
