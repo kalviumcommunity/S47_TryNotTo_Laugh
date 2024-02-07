@@ -3,6 +3,7 @@ import './App.css'
 import Main from './components/Main'
 import {Routes, Route} from 'react-router-dom'
 import Form from './components/Form'
+import UpdateMeme from './components/updateMeme'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Main/>}></Route>
         <Route path='/form' element={<Form/>}></Route>
+        <Route path='/update/:id' element={<UpdateMeme/>}></Route>
       </Routes>
     </>
   )

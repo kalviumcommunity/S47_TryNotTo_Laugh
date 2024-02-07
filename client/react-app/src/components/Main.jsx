@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Main = () => {
 
     const [data,setData] = useState([])
+    const navigate = useNavigate()
 
     useEffect(()=>{
         async function getai(){
@@ -20,6 +22,16 @@ const Main = () => {
     },[])
 
     console.log(data)
+
+    const handleDelete=(id)=>{
+        console.log(id);
+        axios.delete('http://localhost:4200/deleteUser/'+id)
+        .then(res=>{
+            console.log(res);
+            window.location.reload()
+        })
+        .catch(err=> console.log(err))
+    }
 
   return (
     <div>
@@ -38,6 +50,8 @@ const Main = () => {
                             Like:{item.Like} <br/>
                             Dislike:{item.Dislike}
                         </div>
+                        <button onClick={(e)=>handleDelete(item._id)}>Delete</button>
+                        <button onClick={()=> navigate(`/update/${item._id}`,{state:{item}})}>Edit</button>
                         <br/>
                     </div>
                     
