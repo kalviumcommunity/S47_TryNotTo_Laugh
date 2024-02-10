@@ -39,6 +39,9 @@ const Main = () => {
             <Link to='/form'>
                 <button>Add your own meme</button>
             </Link>
+            <Link to='/loginForm'>
+                <button>Login</button>
+            </Link>
         </div>
         {
             data.map((item)=>{
