@@ -5,9 +5,11 @@ const MemesModel = require('./index')
 require('dotenv').config()
 const joi = require('joi')
 const app = express()
+const jwt = require('jsonwebtoken')
 app.use(cors())
 app.use(express.json())
   
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 
 const updateSchema = joi.object({
   Serial: joi.number().required(),
@@ -47,6 +49,11 @@ mongoose.connect(uri)
       }
     })
 
+    app.post('/createUser',(req,res)=>{
+      let { name, email, age } = req.body;  
+        age = parseInt(age)  
+      })
+
     app.get('/getUser/:id',(req,res)=>{
       const id = req.params.id;
       MemesModel.findById({_id:id})
@@ -62,6 +69,30 @@ mongoose.connect(uri)
       .then(updatedMeme => res.json(updatedMeme)) 
       .catch(err => res.json(err));
   });
+
+  app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    const token = jwt.sign({ email }, JWT_SECRET_KEY, { expiresIn: '1h' });
+    res.cookie('token', token, { httpOnly: true });
+    res.json({ success: true });
+});
+
+function authenticateToken(req, res, next) {
+  const token = req.cookies.token;
+
+  if (!token) {
+      return res.status(401).json({ error: 'Unauthorized: Missing token' });
+  }
+
+  jwt.verify(token, JWT_SECRET_KEY, (err, decoded) => {
+      if (err) {
+          return res.status(403).json({ error: 'Forbidden: Invalid token' });
+      }
+      req.user = decoded;
+      next();
+  });
+}
 
   })
   .catch(err => {
