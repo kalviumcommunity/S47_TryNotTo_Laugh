@@ -68,6 +68,9 @@ mongoose.connect(uri)
     console.error('Error connecting to MongoDB Atlas', err);
 });
 
+// let x = document.cookie("firstname=Ansh; expires =Fri,8 Feb 2024 12:00:00 UTC;path='/'")
+// console.log(x)
+
 app.listen(4200,()=>{
   console.log("server is running");
 })
