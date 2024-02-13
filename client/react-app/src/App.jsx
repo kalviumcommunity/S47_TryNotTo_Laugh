@@ -3,7 +3,7 @@ import './App.css'
 import Main from './components/Main'
 import {Routes, Route} from 'react-router-dom'
 import Form from './components/Form'
-import UpdateMeme from './components/updateMeme'
+import UpdateMeme from './components/UpdateMeme'
 import Login from './components/Login'
 
 function App() {
