@@ -1,18 +1,22 @@
 import React, { useState } from 'react'
 import {useParams} from 'react-router-dom'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Form = () => {
     let [Serial,setSerail] = useState(0)
     const [Memes,setMeme] = useState("")
     const [Like, setLike] = useState(0)
     const [Dislike, setDislike] = useState(0)
-
+    const navigation = useNavigate()
 
     const Submit = (e) =>{
       e.preventDefault()
       axios.post("http://localhost:4200/createMeme",{Serial,Memes,Like,Dislike})
-      .then(result=> console.log(result))
+      .then(result=> {
+        console.log(result)
+        navigation('/')
+      })
       .catch(err=> console.log(err))  
     }
 
