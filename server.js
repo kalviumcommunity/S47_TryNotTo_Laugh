@@ -34,16 +34,22 @@ mongoose.connect(uri)
       .catch(err => res.json(err))
   })
 
+  app.get('/users', (req, res) => {
+    MemesModel.find({})
+      .then(users => res.json(users))
+      .catch(err => res.status(500).json({ error: err.message }));
+  });
+
     app.post('/createMeme', (req,res)=>{
       const {error,value} = updateSchema.validate()
       if(error){
         console.log(error.details);
       }else{
-        let { Serial, Memes, Like, Dislike } = req.body;  
+        let { Serial, Memes, Like, Dislike, created_by } = req.body;  
         Serial = parseInt(Serial)
         Like = parseInt(Like)
         Dislike = parseInt(Dislike)  
-        MemesModel.create({Serial, Memes, Like, Dislike })
+        MemesModel.create({Serial, Memes, Like, Dislike,created_by})
           .then(meme => res.json(meme))
           .catch(err => res.json(err))
       }

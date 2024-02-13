@@ -12,7 +12,9 @@ const MemesSchema = new mongoose.Schema({
   },
   Dislike : {
     type:Number
-  }
+  },
+  created_by: { type:String, ref: 'User', required: true }
+
 })
 
 const MemesModel = mongoose.model("Memes",MemesSchema)
