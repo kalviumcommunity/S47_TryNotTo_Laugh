@@ -17,12 +17,6 @@ const Login = () => {
         document.cookie = `email=${email}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
         document.cookie = `age=${age}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
 
-        axios.post("http://localhost:3000/createUser",{name,email,age})
-            .then(res => {
-                console.log(res.data);
-                navigate("/users");
-            })
-            .catch(err => console.error(err));
     }
 
     const handelLogOut = () => {
